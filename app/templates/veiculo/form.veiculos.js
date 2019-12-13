@@ -1,3 +1,5 @@
+import VeiculoService from '../../services/veiculo.service.js';
+
 var count = 0;
 
 window.onload = function() {
@@ -9,7 +11,7 @@ function init() {
     createMenu("Master");
     getCount();
     getVeiculos();
-    buildFiltrosComponente();
+    //buildFiltrosComponente();
     createPagination(5);
     getFilters();
 }
@@ -53,51 +55,45 @@ function getCount() {
     });
 }
 
-function getVeiculos() {
+async function getVeiculos() {
 
-    var data = {
+    let params = {
         idUsuario: 1,
         list: true,
         limit: 5,
-        offset: 3,
-    };
+        offset: 3
+    }
 
-    $.ajax({
-        url: apiAddress + "veiculos",
-        type: "GET",
-        data: data,
-        datatype: "jsonp",
-        success: function(response) {
-            var obj = JSON.parse(response);
-            obj.forEach(veiculo => {
-                $("#lista_veiculos tbody").append(
-                    $("<tr>").append(
-                        $("<td >", { text: veiculo["descricao"], width: "40%" }),
-                        $("<td >", { text: veiculo["placa"], width: "15%" }),
-                        $("<td >", { text: veiculo["marca"], width: "15%" }),
-                        $("<td >", { width: "20%" }).append(
-                            $("<input >", { type: "button", class: "edit", value: "Editar", id: veiculo["id"] }),
-                            $("<input >", { type: "button", class: "delete", value: "Excluir", id: veiculo["id"] }),
-                        )
-                    )
+    await VeiculoService.getListVeiculos(params).then(response => buildTable(response));
+
+}
+
+function buildTable(veiculos) {
+    console.log("LOG 2");
+    veiculos.forEach(veiculo => {
+        $("#lista_veiculos tbody").append(
+            $("<tr>").append(
+                $("<td >", { text: veiculo["descricao"], width: "40%" }),
+                $("<td >", { text: veiculo["placa"], width: "15%" }),
+                $("<td >", { text: veiculo["marca"], width: "15%" }),
+                $("<td >", { width: "20%" }).append(
+                    $("<input >", { type: "button", class: "edit", value: "Editar", id: veiculo["id"] }),
+                    $("<input >", { type: "button", class: "delete", value: "Excluir", id: veiculo["id"] }),
                 )
-            });
+            )
+        )
+    });
 
-            $('.edit').each(function() {
-                $(this).on("click", function() {
-                    editVeiculo(this.id);
-                });
-            });
+    $('.edit').each(function() {
+        $(this).on("click", function() {
+            editVeiculo(this.id);
+        });
+    });
 
-            $('.delete').each(function() {
-                $(this).on("click", function() {
-                    editVeiculo(this.id);
-                });
-            });
-        },
-        error: function(error) {
-            alert("Erro na requisicao");
-        }
+    $('.delete').each(function() {
+        $(this).on("click", function() {
+            editVeiculo(this.id);
+        });
     });
 }
 
