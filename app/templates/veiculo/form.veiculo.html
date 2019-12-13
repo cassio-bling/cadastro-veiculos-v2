@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <title>Form Veículos</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="../app/templates/layouts/jquery/jquery.js"></script>
+    <script src="../app/templates/layouts/jquery/jquery.mask.js"></script>
+    <script src="../app/templates/layouts/jquery/default.js"></script>
+    <script src="../app/templates/veiculo/form.veiculos.js"></script>
+    <script src="../app/templates/veiculo/form.veiculo.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../app/templates/layouts/styles/style.css">
+</head>
+
+<body>
+    <form name="veiculo" method="post" action="" id="form">
+        <div class="cadastro">
+            <h3 class="page-header">Dados cadastrais</h3>
+            <hr>
+            <div hidden>
+                <input hidden type="text" id="id" name="id">
+            </div>
+            <div>
+                <span class="block-half">
+                    <label for="descricao">Descrição</label>
+                    <input type="text" id="descricao" required maxlength="60" placeholder="Descrição do veículo" name="descricao">
+                </span>
+                <span class="block-quarter">
+                    <label for="placa">Placa</label>
+                    <input type="text" class="placa" id="placa" required placeholder="Placa do veículo" name="placa">
+                </span>
+                <span class="block-quarter">
+                    <label for="codigoRenavam">Código RENAVAM</label>
+                    <input type="text" class="renavam" id="codigoRenavam" required placeholder="RENAVAM do veículo" name="codigoRenavam">
+                </span>
+            </div>
+            <div class="row">
+                <span class="block-small">
+                    <label for="anoModelo">Ano modelo</label>
+                    <input type="number" class="yearpicker" maxlength="4" min="1920" max="2099" autocomplete="off" placeholder="Ano do modelo" id="anoModelo" name="anoModelo" required>
+                </span>
+
+                <span class="block-small">
+                    <label for="anoFabricacao">Ano fabricação</label>
+                    <input type="number" class="yearpicker" maxlength="4" min="1920" max="2099" autocomplete="off" placeholder="Fabricação" id="anoFabricacao" name="anoFabricacao" required>
+                </span>
+
+                <span class="block-quarter">
+                    <label for="cor">Cor</label>
+                    <input type="text" id="cor" required maxlength="20" placeholder="Cor do veículo" name="cor">
+                </span>
+
+                <span class="block-tiny">
+                    <label for="km">KM</label>
+                    <input type="text" id="km" class="km" required placeholder="KM" name="km">
+                </span>
+
+                <span class="block-quarter">
+                    <label for="marca">Marca</label>
+                    <select id="marca" name="marca" required class="select-css">
+                        <option disabled selected value> -- marca -- </option>
+                        <option value="Citroen">Citroen</option>
+                        <option value="Chevrolet">Chevrolet</option>
+                        <option value="Fiat">Fiat</option>
+                        <option value="Ford">Ford</option>
+                        <option value="Honda">Honda</option>
+                        <option value="Renault">Renault</option>
+                        <option value="Toyota">Toyota</option>
+                        <option value="Volkswagen">Volkswagen</option>
+                    </select>
+                </span>
+            </div>
+
+            <div>
+                <span class="block-quarter">
+                    <label for="preco">Preço</label>
+                    <input type="text" class="dinheiro" name="preco" id="preco" required placeholder="R$" maxlength="10">
+                </span>
+                <span class="block-quarter">
+                    <label for="precoFipe">Preço FIPE</label>
+                    <input type="text" class="dinheiro" name="precoFipe" id="precoFipe" required placeholder="R$" maxlength="10">
+                </span>
+            </div>
+
+            <h3 class="page-header">Componentes adicionais</h3>
+            <hr>
+            <div>
+                <div id="componentes"></div>
+            </div>
+            <hr>
+
+            <div>
+                <span class="block-half">
+                    <input type="button" class="save" value="Salvar" id="button-save">
+                    <input type="button" class="cancel" value="Cancelar" id="button-cancel" formnovalidate>
+                </span>
+            </div>
+        </div>
+    </form>
+</body>
+
+</html>

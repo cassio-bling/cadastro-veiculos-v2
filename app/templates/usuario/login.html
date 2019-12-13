@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <title>MVC Veículo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="app/templates/layouts/jquery/jquery.js"></script>
+    <script src="app/templates/layouts/jquery/jquery.mask.js"></script>
+    <script src="app/templates/layouts/jquery/default.js"></script>
+    <script src="app/templates/usuario/login.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="app/templates/layouts/styles/style.css">
+</head>
+
+<body>
+    <form class="grid" method="post" id="form">
+        <div align="center">
+            <h1>Sistema de veículos</h1>
+            <div class="row">
+                <span class="block-quarter" align="left">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" required maxlength="50" placeholder="Email" name="email" autocomplete="on">
+                </span>
+            </div>
+            </p>
+            <div class="row">
+                <span class="block-quarter" align="left">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" required placeholder="Senha" name="senha" autocomplete="on">
+                </span>
+            </div>
+            </p>
+            <div>
+                <span class="block-half">
+                    <input type="button" class="login" value="Login" id="login" name="login">
+                    <input type="button" class="signup" value="Cadastrar">
+                </span>
+            </div>
+        </div>
+    </form>
+</body>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <title>Form Veículos</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="app/templates/layouts/jquery/jquery.js"></script>
+    <script src="app/templates/layouts/jquery/jquery.mask.js"></script>
+    <script src="app/templates/layouts/jquery/default.js"></script>
+    <script src="app/templates/veiculo/form.veiculos.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="app/templates/layouts/styles/style.css">
+</head>
+
+<body>
+    <form method="post" id="form">
+        <p id=menu></p>
+        <div>
+            <p>
+                <label>Cadastro de veículos</label>
+                <label id="total" class="label-right">Total de registros: </label>
+            </p>
+        </div>
+
+        <div>
+            <button type="button" class="collapsible" name="botaoFiltros">
+                <label class="label-filter">Filtros</label>
+            </button>
+            <div class="content">
+                <span class="block-half">
+                    <label for="descricao">Descrição</label>
+                    <input class="filtro" type="text" id="filtro_descricao" name="filtro_descricao" maxlength="60" placeholder="Descrição do veículo">
+                </span>
+                <span class="block-quarter">
+                    <label for="marca">Marca</label>
+                    <select id="filtro_marca" name="filtro_marca" class="filtro select-css">
+                        <option disabled selected value> -- marca -- </option>
+                        <option value=""></option>
+                        <option value="Citroen">Citroen</option>
+                        <option value="Chevrolet">Chevrolet</option>
+                        <option value="Fiat">Fiat</option>
+                        <option value="Ford">Ford</option>
+                        <option value="Honda">Honda</option>
+                        <option value="Renault">Renault</option>
+                        <option value="Toyota">Toyota</option>
+                        <option value="Volkswagen">Volkswagen</option>
+                    </select>
+                </span>
+                <span class="block-full">
+                    <label class="page-header">Componentes adicionais</label>
+                    <hr>
+                    <div>
+                        <div id="componentes"></div>
+                    </div>
+                </span>
+                <span class="block-quarter">
+                    <input type="button" class="filter" value="Filtrar" id="button-filter" name="filter">
+                    <input type="button" class="clear" value="Limpar" id="button-cleanFilters" name="filter">
+                </span>
+            </div>
+        </div>
+
+        <table id="lista_veiculos" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Descrição</th>
+                    <th>Placa</th>
+                    <th>Marca</th>
+                    <th class="action">
+                        <input type="button" class="insert" value="Incluir" id="button-create">
+                        <input type="button" class="report" value="Relatório" id="button-report">
+                    </th>
+                </tr>
+                <tbody></tbody>
+            </thead>
+        </table>
+
+        <p id="pagination"></p>
+    </form>
+</body>
