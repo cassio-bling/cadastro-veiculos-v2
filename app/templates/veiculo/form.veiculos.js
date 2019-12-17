@@ -1,7 +1,9 @@
 import VeiculoService from '../../services/veiculo.service.js';
+import VeiculoComponenteService from '../../services/veiculoComponente.service.js';
 import ComponenteService from '../../services/componente.service.js';
 import Filters from '../../utils/filters.js';
 import Cookies from '../../utils/cookies.js';
+import Layout from '../../utils/layout.js';
 
 window.onload = function() {
     init();
@@ -9,11 +11,11 @@ window.onload = function() {
 }
 
 function init() {
-    createMenu("Master");
+    Layout.createMenu();
+    Layout.createPagination(5);
     getCount();
     getVeiculos();
     buildFiltroComponentes();
-    createPagination(5);
 }
 
 function bindEvents() {
@@ -38,7 +40,7 @@ function bindEvents() {
 
 async function getCount() {
     let params = {
-        idUsuario: 1
+        idUsuario: Cookies.get("idUsuario")
     }
 
     let response = await VeiculoService.count(params);
@@ -76,8 +78,10 @@ async function getVeiculos() {
 
     let response = await VeiculoService.list(params);
 
-    if (response.status != "error")
+    if (response.status != "error") {
         buildTabelaVeiculos(response);
+        applyMasks();
+    }
 }
 
 function buildTabelaVeiculos(veiculos) {
@@ -87,7 +91,7 @@ function buildTabelaVeiculos(veiculos) {
         $("#lista_veiculos tbody").append(
             $("<tr>").append(
                 $("<td>", { text: veiculo["descricao"], width: "40%" }),
-                $("<td>", { text: veiculo["placa"], width: "15%" }),
+                $("<td>", { text: veiculo["placa"], width: "15%", class: "placa" }),
                 $("<td>", { text: veiculo["marca"], width: "15%" }),
                 $("<td>", { width: "20%" }).append(
                     $("<input>", { type: "button", class: "edit", value: "Editar", id: veiculo["id"] }),
@@ -135,11 +139,8 @@ function editVeiculo(index) {
 
 async function deleteVeiculo(index) {
     if (confirm("Confirmar exclusão do registro?")) {
-        let params = {
-            id: index
-        }
-
-        await VeiculoService.remove(params);
+        await VeiculoComponenteService.remove(index);
+        await VeiculoService.remove(index);
         getVeiculos();
     }
 }

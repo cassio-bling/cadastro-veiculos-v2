@@ -10,19 +10,19 @@ async function count(params) {
 }
 
 async function get(id) {
-    return await Fetch.get('/veiculos', id);
+    return await Fetch.get('/veiculos/' + id);
 }
 
 async function create(params) {
     return await Fetch.create('/veiculos', params);
 }
 
-async function update(params) {
-    return await Fetch.update('/veiculos', params);
+async function update(id, params) {
+    return await Fetch.update('/veiculos/' + id, params);
 }
 
 async function remove(id) {
-    return await Fetch.remove('/veiculos', id);
+    return await Fetch.remove('/veiculos/' + id);
 }
 
 export default {

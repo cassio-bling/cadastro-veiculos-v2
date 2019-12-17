@@ -1,6 +1,7 @@
 <?php
 
 require_once "base.class.php";
+require_once "src/models/veiculo.model.php";
 
 class Veiculo extends Base
 {
@@ -37,15 +38,16 @@ class Veiculo extends Base
     {
         $query = new Query("INSERT INTO " . self::TABELA . " (descricao, placa, codigoRenavam, anoModelo, anoFabricacao, cor, km, marca, preco, precoFipe, idUsuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $query->setTypes("sssiisisddi");
-        $query->setParams($model);
+        $query->setParams($this->parse($model));
 
-        return Database::execute($query)->inserted_id;
+        return Database::execute($query);
     }
 
     public function update(int $id, $model)
     {
         $query = new Query("UPDATE " . self::TABELA . " SET descricao = ?, placa = ?, codigoRenavam = ?, anoModelo = ?, anoFabricacao = ?, cor = ?, km = ?, marca = ?, preco = ?, precoFipe = ?, idUsuario = ? WHERE id = ?");
         $query->setTypes("sssiisisddii");
+
         $query->setParams($this->parse($model));
         $query->addParam($id);
 
@@ -96,17 +98,17 @@ class Veiculo extends Base
     private function parse($model)
     {
         $data = array(
-            $model["descricao"],
-            $model["placa"],
-            $model["codigoRenavam"],
-            $model["anoModelo"],
-            $model["anoFabricacao"],
-            $model["cor"],
-            $model["km"],
-            $model["marca"],
-            $model["preco"],
-            $model["precoFipe"],
-            $model["idUsuario"]
+            $model->getDescricao(),
+            $model->getPlaca(),
+            $model->getCodigoRenavam(),
+            $model->getAnoModelo(),
+            $model->getAnoFabricacao(),
+            $model->getCor(),
+            $model->getKm(),
+            $model->getMarca(),
+            $model->getPreco(),
+            $model->getPrecoFipe(),
+            $model->getIdUsuario()
         );
 
         return $data;

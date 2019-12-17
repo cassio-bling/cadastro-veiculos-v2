@@ -22,7 +22,7 @@ class Usuario extends Base
     {
         $query = new Query("INSERT INTO " . self::TABELA . " (nome, email, senha) VALUES (?, ?, ?)", "sss", $model);
 
-        return Database::execute($query)->inserted_id;
+        return Database::execute($query);
     }
 
     public function update($model)

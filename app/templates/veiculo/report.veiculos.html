@@ -24,16 +24,6 @@
                 <label id="usuario" class="label-right">Usuário:  </label>
             </span>
         </div>
-        <!-- <div <?php if (empty($_SESSION[ "filtros"]->getDescricao())) echo 'hidden' ?>>
-            <span class="block-quarter">
-                <label>Descrição: <?php echo $_SESSION["filtros"]->getDescricao(); ?> </label>
-            </span>
-        </div>
-        <div <?php if (empty($_SESSION[ "filtros"]->getMarca())) echo 'hidden' ?>>
-            <span class="block-quarter">
-                <label>Marca: <?php echo $_SESSION["filtros"]->getMarca(); ?> </label>
-            </span>
-        </div> -->
         <table id="lista_veiculos" class="table table-striped">
             <thead>
                 <tr>
@@ -54,8 +44,8 @@
         <p>
             <div>
                 <span class="block-half">
-                    <input type="button" class="print" value="Imprimir" name="button-print">
-                    <input type="button" class="cancel" value="Fechar" name="button-cancel">
+                    <input type="button" class="print" value="Imprimir" id="button-print">
+                    <input type="button" class="cancel" value="Fechar" id="button-close">
                 </span>
             </div>
         </p>

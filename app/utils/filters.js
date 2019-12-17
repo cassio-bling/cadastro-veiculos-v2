@@ -10,8 +10,10 @@ function get() {
 
     filters = Array.from(document.getElementsByClassName("filtro-checkbox"));
 
+    let arr = Cookies.get(filters[0].name);
+
     filters.forEach(filter => {
-        filter.checked = Cookies.get(filter.id) == "true";
+        filter.checked = arr.includes(filter.value);
     });
 }
 
@@ -19,14 +21,26 @@ function set() {
     let filters = Array.from(document.getElementsByClassName("filtro"));
 
     filters.forEach(filter => {
-        Cookies.set(filter.name, filter.value, 1);
+        if (filter.value) {
+            Cookies.set(filter.name, filter.value);
+        }
     })
 
     filters = Array.from(document.getElementsByClassName("filtro-checkbox"));
 
+    let arr = Array();
+
     filters.forEach(filter => {
-        Cookies.set(filter.id, filter.checked, 1);
+        if (filter.checked) {
+            arr.push(filter.value);
+        }
     });
+
+    if (arr.length > 0) {
+        Cookies.set(filters[0].name, arr);
+    } else {
+        Cookies.set(filters[0].name, "", -1);
+    }
 }
 
 function clear() {
@@ -41,8 +55,10 @@ function clear() {
 
     filters.forEach(filter => {
         filter.checked = false;
-        Cookies.set(filter.id, false, -1);
+
     });
+
+    Cookies.set(filters[0].name, "", -1);
 }
 
 export default {

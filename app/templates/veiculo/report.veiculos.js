@@ -1,6 +1,4 @@
 import VeiculoService from '../../services/veiculo.service.js';
-import ComponenteService from '../../services/componente.service.js';
-import Filters from '../../utils/filters.js';
 import Cookies from '../../utils/cookies.js';
 
 window.onload = function() {
@@ -23,8 +21,8 @@ function bindEvents() {
         window.print();
     });
 
-    $('#button-cancel').on('click', function() {
-        window.location.href = "veiculos";
+    $('#button-close').on('click', function() {
+        window.location.replace("../veiculos");
     });
 }
 
@@ -46,10 +44,11 @@ async function getVeiculos() {
         params.componentes = selectedValues.split(",").map(Number);
     }
 
-    let response = await VeiculoService.get(params);
+    let response = await VeiculoService.list(params);
 
     if (response.status != "error") {
         buildTabelaVeiculos(response);
+        applyMasks();
     }
 }
 
@@ -60,7 +59,7 @@ function buildTabelaVeiculos(veiculos) {
         $("#lista_veiculos tbody").append(
             $("<tr>").append(
                 $("<td>", { text: veiculo["descricao"], width: "25%" }),
-                $("<td>", { text: veiculo["placa"], width: "10%" }),
+                $("<td>", { text: veiculo["placa"], width: "10%", class: "placa" }),
                 $("<td>", { text: veiculo["codigoRenavam"], width: "8%" }),
                 $("<td>", { text: veiculo["anoModelo"], width: "7%" }),
                 $("<td>", { text: veiculo["anoFabricacao"], width: "7%" }),

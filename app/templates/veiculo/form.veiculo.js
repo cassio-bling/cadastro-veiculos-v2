@@ -1,4 +1,9 @@
-var count = 0;
+import VeiculoService from '../../services/veiculo.service.js';
+import VeiculoComponenteService from '../../services/veiculoComponente.service.js';
+import ComponenteService from '../../services/componente.service.js';
+import Cookies from '../../utils/cookies.js';
+import Validation from '../../utils/validation.js';
+import Layout from '../../utils/layout.js';
 
 window.onload = function() {
     init();
@@ -6,90 +11,80 @@ window.onload = function() {
 }
 
 function init() {
-    createMenu("Master");
+    Layout.createMenu();
     checkMethod();
 }
 
 function bindEvents() {
     $('#button-save').on('click', function() {
-        if (validateForm()) {
-            var index = document.URL.split('/veiculos/')[1];
+        if (Validation.validateForm()) {
+            let index = document.URL.split('/veiculos/')[1];
             saveVeiculo(index);
         }
     });
 
     $('#button-cancel').on('click', function() {
-        window.location.href = "veiculos";
+        window.location.replace("../veiculos");
     });
 }
 
 function checkMethod() {
-    var index = document.URL.split('/veiculos/')[1];
+    let index = document.URL.split('/veiculos/')[1];
     if (index != "create") {
         loadVeiculo(index)
     } else {
-        getComponentes().then(response => {
-            componentes = JSON.parse(response);
-            componentes.forEach(componente => {
-                $("#componentes").append(
-                    $("<span>", { class: "block-quarter" }).append(
-                        $("<input>", { type: "checkbox", class: "filtro-checkbox", name: "componentes[]", id: "componente:" + componente["id"], value: componente["id"], checked: componente["checked"] == 1 }),
-                        $("<label>", { class: "label-checkbox", for: "componente:" + componente["id"], text: componente["descricao"] }),
-                    )
+        loadComponentes();
+        applyMasks();
+    }
+}
+
+async function loadVeiculo(index) {
+    let response = await VeiculoService.get(index);
+
+    if (response.status != "error") {
+        Object.keys(response).forEach(function(key) {
+            if (document.getElementById(key)) {
+                document.getElementById(key).value = response[key];
+            }
+        });
+
+        loadVeiculoComponentes(index);
+        applyMasks();
+    }
+}
+
+async function loadComponentes() {
+    let response = await ComponenteService.get();
+
+    if (response != "error") {
+        response.forEach(componente => {
+            $("#componentes").append(
+                $("<span>", { class: "block-quarter" }).append(
+                    $("<input>", { type: "checkbox", class: "filtro-checkbox", name: "componentes[]", id: "componente:" + componente["id"], value: componente["id"], checked: componente["checked"] == 1 }),
+                    $("<label>", { class: "label-checkbox", for: "componente:" + componente["id"], text: componente["descricao"] }),
                 )
-            });
+            )
         });
     }
 }
 
-function loadVeiculo(index) {
-    $.ajax({
-        url: apiAddress + "veiculos/" + index,
-        type: "GET",
-        datatype: "jsonp",
-        success: function(response) {
-            var veiculo = JSON.parse(response);
-            Object.keys(veiculo).forEach(function(key) {
-                if (document.getElementById(key)) {
-                    document.getElementById(key).value = veiculo[key];
-                }
-            });
-            loadComponentes(index);
-        },
-        error: function(error) {
-            alert("Erro na requisicao");
-        }
-    });
-}
+async function loadVeiculoComponentes(index) {
+    let response = await VeiculoComponenteService.get(index);
 
-function loadComponentes(index) {
-    $.ajax({
-        url: apiAddress + "veiculoComponentes/" + index,
-        type: "GET",
-        datatype: "jsonp",
-        success: function(response) {
-            var componentes = JSON.parse(response);
-
-            componentes.forEach(componente => {
-                $("#componentes").append(
-                    $("<span>", { class: "block-quarter" }).append(
-                        $("<input>", { type: "checkbox", class: "filtro-checkbox", name: "componentes[]", id: "componente:" + componente["id"], value: componente["id"], checked: componente["checked"] == 1 }),
-                        $("<label>", { class: "label-checkbox", for: "componente:" + componente["id"], text: componente["descricao"] }),
-                    )
+    if (response != "error") {
+        response.forEach(componente => {
+            $("#componentes").append(
+                $("<span>", { class: "block-quarter" }).append(
+                    $("<input>", { type: "checkbox", class: "filtro-checkbox", name: "componentes[]", id: "componente:" + componente["id"], value: componente["id"], checked: componente["checked"] == 1 }),
+                    $("<label>", { class: "label-checkbox", for: "componente:" + componente["id"], text: componente["descricao"] }),
                 )
-            });
-        },
-        error: function(error) {
-            alert("Erro na requisicao");
-        }
-    });
+            )
+        });
+    }
 }
 
-function saveVeiculo(index) {
-
-    console.log($("#descricao").value);
-
-    var data = {
+async function saveVeiculo(index) {
+    let data = {
         descricao: $("#descricao").val(),
         placa: $("#placa").val(),
         codigoRenavam: $("#codigoRenavam").val(),
@@ -100,23 +95,43 @@ function saveVeiculo(index) {
         marca: $("#marca").val(),
         preco: $("#preco").val(),
         precoFipe: $("#precoFipe").val(),
-        idUsuario: 1,
-        id: $("#id").val(),
+        idUsuario: Cookies.get("idUsuario"),
     };
 
-    console.log(data);
+    if (index == "create") {
+        var response = await VeiculoService.create(data);
+        if (response != "error") {
+            index = response["id"];
+        }
+    } else {
+        var response = await VeiculoService.update(index, data);
+    }
 
-    $.ajax({
-        url: apiAddress + "veiculos/" + index,
-        type: "PUT",
-        data: data,
-        datatype: "jsonp",
-        success: function(response) {
-            var result = response;
-            window.location.href = " ";
-        },
-        error: function(error) {
-            alert("Erro na requisicao");
+    if (response != "error") {
+        response = await updateVeiculoComponentes(index);
+
+        if (response != "error") {
+            window.location.replace("../veiculos");
+        }
+    }
+}
+
+async function updateVeiculoComponentes(idVeiculo) {
+    let arr = Array();
+
+    document.getElementsByName("componentes[]").forEach(element => {
+        if (element.checked) {
+            arr.push(Number(element.value))
         }
     });
+
+    let data = {
+        componentes: arr
+    }
+
+    let response = await VeiculoComponenteService.update(idVeiculo, data);
+
+    if (response != "error") {
+        window.location.replace("../veiculos");
+    }
 }

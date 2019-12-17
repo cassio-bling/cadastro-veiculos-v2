@@ -21,7 +21,7 @@ async function request(url, params, method = 'GET') {
     const response = await fetch(_apiHost + url, options);
 
     if (response.status !== 200) {
-        return generateErrorResponse('O servidor retornou um status inexperado.');
+        return alert(generateErrorResponse('O servidor retornou um status inexperado.'));
     }
 
     const result = await response.json();

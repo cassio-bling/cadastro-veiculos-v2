@@ -1,5 +1,6 @@
 import UsuarioService from '../../services/usuario.service.js';
 import Cookies from '../../utils/cookies.js';
+import Validation from '../../utils/validate.js';
 
 window.onload = function() {
     bindEvents();
@@ -7,11 +8,9 @@ window.onload = function() {
 
 function bindEvents() {
     $('#login-button').on('click', function() {
-        if (!validateForm()) {
-            return;
+        if (Validation.validateForm()) {
+            checkLogin();
         }
-
-        checkLogin();
     });
 
     $('#create-button').on('click', function() {

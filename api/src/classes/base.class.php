@@ -38,7 +38,7 @@ abstract class Base
 
     protected function setOrderBy(Query $query)
     {
-        $query->addSql(" ORDER BY id");
+        $query->addSql(" ORDER BY id DESC");
     }
 
     protected function setPagination(Query $query, $model)

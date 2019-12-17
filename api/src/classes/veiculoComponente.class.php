@@ -18,14 +18,23 @@ class VeiculoComponente extends Base
     {
         $this->delete($idVeiculo);
 
+        if (count($componentes) <= 0) {
+            return;
+        }
+
         $in = str_repeat("?,", count($componentes) - 1) . "?";
         $types = str_repeat("i", count($componentes));
 
         $query = new Query();
         $query->setSql("INSERT INTO veiculo_componente (idVeiculo, idComponente) SELECT ?, id FROM componente WHERE id IN ($in)");
         $query->setTypes("i" . $types);
+        
         $query->addParam($idVeiculo);
-        $query->addParam($componentes);
+        
+        foreach ($componentes as $value) {
+            $query->addParam($value);
+        }
+        
         return Database::execute($query);
     }
 
