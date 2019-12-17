@@ -94,10 +94,10 @@ function buildTabelaVeiculos(veiculos) {
                 $("<td>", { text: veiculo["placa"], width: "15%", class: "placa" }),
                 $("<td>", { text: veiculo["marca"], width: "15%" }),
                 $("<td>", { width: "20%" }).append(
-                    $("<input>", { type: "button", class: "edit", value: "Editar", id: veiculo["id"] }),
+                    $("<input> ", { type: "button", class: "edit", value: "Editar", id: veiculo["id"] }),
                     $("<input>", { type: "button", class: "delete", value: "Excluir", id: veiculo["id"] }),
                 )
-            )
+            ).after("  d   ")
         )
     });
 

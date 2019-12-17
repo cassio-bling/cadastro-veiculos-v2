@@ -1,6 +1,6 @@
 import UsuarioService from '../../services/usuario.service.js';
 import Cookies from '../../utils/cookies.js';
-import Validation from '../../utils/validate.js';
+import Validation from '../../utils/validation.js';
 
 window.onload = function() {
     bindEvents();
