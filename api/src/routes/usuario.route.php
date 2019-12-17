@@ -12,6 +12,7 @@ $app->get('/usuarios', function (Request $request) {
 
     $usuario = new Usuario();
     $result = $usuario->login($email, $senha);
+
     echo json_encode($result, JSON_PRETTY_PRINT);
     // echo '{"error": {"text": ' . $e->getMessage() . '}';
 });

@@ -43,16 +43,16 @@ $(document).ready(function() {
         var coll = document.getElementsByClassName("collapsible");
 
         for (var i = 0; i < coll.length; i++) {
-            coll[i].nextElementSibling.style.display = (getCookie(String(coll[i].name)) == "true") ? "block" : "none";
+            //coll[i].nextElementSibling.style.display = (getCookie(String(coll[i].name)) == "true") ? "block" : "none";
             coll[i].addEventListener("click", function() {
                 this.classList.toggle("active");
                 var content = this.nextElementSibling;
                 if (content.style.display === "block") {
                     content.style.display = "none";
-                    setCookie(this.name, "", -1);
+                    //setCookie(this.name, "", -1);
                 } else {
                     content.style.display = "block";
-                    setCookie(this.name, "true", 1);
+                    //setCookie(this.name, "true", 1);
                 }
             });
         }
@@ -106,77 +106,12 @@ function confirmDelete() {
     return confirm("Confirmar exclusão do registro?");
 }
 
-function cleanFilters() {
-    var col = document.getElementsByClassName("filtro");
-    for (var i = 0; i < col.length; i++) {
-        col[i].value = "";
-        setCookie(col[i].name, "", -1);
-    };
-
-    var colls = document.getElementsByClassName("filtro-checkbox");
-    for (var i = 0; i < colls.length; i++) {
-        colls[i].checked = false;
-        setCookie(colls[i].id, false, -1);
-    };
-}
-
-function saveFilters() {
-    var col = document.getElementsByClassName("filtro");
-    for (var i = 0; i < col.length; i++) {
-        setCookie(col[i].name, col[i].value, 1);
-    };
-
-    var colls = document.getElementsByClassName("filtro-checkbox");
-    for (var i = 0; i < colls.length; i++) {
-        setCookie(colls[i].id, colls[i].checked, 1);
-    };
-}
-
-function getFilters() {
-    var col = document.getElementsByClassName("filtro");
-    for (var i = 0; i < col.length; i++) {
-        col[i].value = getCookie(col[i].name);
-    };
-
-    var colls = document.getElementsByClassName("filtro-checkbox");
-    for (var i = 0; i < colls.length; i++) {
-        colls[i].checked = getCookie(colls[i].id) == "true";
-    };
-}
-
-function setCookie(cname, cvalue, exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    var expires = "expires=" + d.toGMTString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-}
-
-function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-}
-
 function setOffset() {
     setCookie("veiculoOffset", document.getElementById("offset").value, 1);
 }
 
 function getOffset() {
     document.getElementById("offset").value = getCookie("veiculoOffset");
-}
-
-function removeCookies() {
-    document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
 }
 
 function createPagination(numberOfPages) {

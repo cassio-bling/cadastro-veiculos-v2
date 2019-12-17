@@ -48,7 +48,7 @@ class Veiculo extends Base
         $query->setTypes("sssiisisddii");
         $query->setParams($this->parse($model));
         $query->addParam($id);
-       
+
         return Database::execute($query);
     }
 
@@ -79,11 +79,17 @@ class Veiculo extends Base
         }
 
         if (array_key_exists("componentes", $model)) {
-            $in = str_repeat("?,", count($model["componentes"]) - 1) . "?";
+            $componentes = array_map('intval', explode(',', $model["componentes"]));
+
+            $in = str_repeat("?,", count($componentes) - 1) . "?";
             $query->addSql(" AND (SELECT COUNT(idVeiculo) FROM veiculo_componente WHERE idComponente IN ($in) AND id = idVeiculo) = ?");
-            $query->addType(str_repeat("i", count($model["componentes"])) . "i");
-            $query->addParam(...$model["componentes"]);
-            $query->addParam(count($model["componentes"]));
+            $query->addType(str_repeat("i", count($componentes)) . "i");
+
+            foreach ($componentes as $componente) {
+                $query->addParam($componente);
+            }
+
+            $query->addParam(count($componentes));
         }
     }
 

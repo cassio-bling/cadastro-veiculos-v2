@@ -11,7 +11,7 @@ async function request(url, params, method = 'GET') {
     };
 
     if (params) {
-        if (method === 'GET') {
+        if (method === 'GET' || method === 'DELETE') {
             url += '?' + objectToQueryString(params);
         } else {
             options.body = JSON.stringify(params);
@@ -21,13 +21,12 @@ async function request(url, params, method = 'GET') {
     const response = await fetch(_apiHost + url, options);
 
     if (response.status !== 200) {
-        return generateErrorResponse('The server responded with an unexpected status.');
+        return generateErrorResponse('O servidor retornou um status inexperado.');
     }
 
     const result = await response.json();
 
     return result;
-
 }
 
 function objectToQueryString(obj) {
