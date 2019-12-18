@@ -26,13 +26,16 @@ async function checkLogin() {
 
     let usuario = await UsuarioService.get(params);
 
-    if (usuario) {
-        Cookies.clear();
-        Cookies.set("idUsuario", usuario["id"]);
-        Cookies.set("nomeUsuario", usuario["nome"]);
+    if (usuario.status != "error") {
+        if (usuario["id"]) {
+            Cookies.clear();
+            Cookies.set("idUsuario", usuario["id"]);
+            Cookies.set("nomeUsuario", usuario["nome"]);
+            Cookies.set("token", usuario["token"]);
 
-        window.location.href = "veiculos";
-    } else {
-        alert("Login incorreto, tente novamente");
+            window.location.href = "veiculos";
+        } else {
+            alert("Login incorreto, tente novamente");
+        }
     }
 }

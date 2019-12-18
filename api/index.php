@@ -29,6 +29,12 @@ $app->options('/{routes:.+}', function ($request, $response, $args) {
 });
 
 $app->add(function ($req, $res, $next) {
+    
+    
+    
+    // if ($req->get )
+    // $req->getHeader("HTTP_AUTHORIZATION")[0];
+    
     $response = $next($req, $res);
     return $response
         ->withHeader('Access-Control-Allow-Origin', '*')

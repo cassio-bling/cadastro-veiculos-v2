@@ -8,11 +8,20 @@ require_once "src/models/veiculo.model.php";
 
 $app->get('/veiculos/count', function (Request $request, Response $response) {
     $veiculo = new Veiculo();
-    $result = $veiculo->count($request->getParams());    
+    $result = $veiculo->count($request->getParams());
     return $response->withJson($result, 200)->withHeader('Content-type', 'application/json');
 });
 
 $app->get('/veiculos', function (Request $request, Response $response) {
+    error_log($request->getUri());
+
+    $test =  $request->getUri()->explode("/");
+    for ($i=0; $i < count($test); $i++) { 
+        error_log($test[$i]);
+    }
+    
+    return $request->getRequestTarget();
+    
     $veiculo = new Veiculo();
     $result = $veiculo->getAll($request->getParams());
     return $response->withJson($result, 200)->withHeader('Content-type', 'application/json');
@@ -39,7 +48,7 @@ $app->put('/veiculos/{id}', function (Request $request, Response $response) {
 $app->delete('/veiculos/{id}', function (Request $request, Response $response) {
     $veiculo = new Veiculo();
     $result = $veiculo->delete($request->getAttribute('id'));
-    return $response->withJson(array("message" => "Registro excluído"))->withHeader('Content-type', 'application/json');    
+    return $response->withJson(array("message" => "Registro excluído"))->withHeader('Content-type', 'application/json');
 });
 
 function map($params)

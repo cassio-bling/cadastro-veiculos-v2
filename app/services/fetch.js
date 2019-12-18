@@ -1,4 +1,6 @@
 // Fetch.js
+import Cookies from '../utils/cookies.js';
+
 const _apiHost = 'http://localhost/cadastro-veiculos-v2/api';
 
 async function request(url, params, method = 'GET') {
@@ -16,6 +18,10 @@ async function request(url, params, method = 'GET') {
         } else {
             options.body = JSON.stringify(params);
         }
+    }
+
+    if (Cookies.get("token") != null) {
+        options.headers["Authorization"] = Cookies.get("token");
     }
 
     const response = await fetch(_apiHost + url, options);
@@ -42,7 +48,7 @@ function generateErrorResponse(message) {
 }
 
 function get(url, params) {
-    return request(url, params);
+    return request(url, params, 'GET');
 }
 
 function create(url, params) {
