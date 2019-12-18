@@ -131,11 +131,11 @@ input[type=button].edit,
 input[type=button].delete,
 input[type=button].report,
 input[type=button].pagination,
-input[type=submit].selected-page,
+input[type=button].selected-page,
 input[type=button].filter,
 input[type=button].clear {
     padding: 7px 10px 7px 10px;
-    margin: 3px 5px 3px 5px;
+    margin: 2px 2px 2px 2px;
     width: 110px;
     height: 40px;
 }

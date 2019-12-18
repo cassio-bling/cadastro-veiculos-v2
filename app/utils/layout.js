@@ -1,7 +1,12 @@
 // Layout.js
 import Cookies from './cookies.js';
 
-function createPagination(numberOfPages) {
+function createPagination(numberOfPages, paginationFunction) {
+    const node = document.getElementById("pagination");
+    while (node.firstChild) {
+        node.removeChild(node.firstChild);
+    }
+
     $("#pagination").append(
         $("<input>", { type: "button", value: "<<", id: "first", class: "pagination" }),
         $("<input>", { type: "button", value: "<", id: "prior", class: "pagination" })
@@ -17,6 +22,10 @@ function createPagination(numberOfPages) {
         $("<input>", { type: "button", value: ">", id: "next", class: "pagination" }),
         $("<input>", { type: "button", value: ">>", id: "last", class: "pagination" }),
     );
+
+    $('.pagination').on("click", function() {
+        paginationFunction(this.value);
+    });
 }
 
 function createMenu() {
@@ -27,14 +36,6 @@ function createMenu() {
             $("<a>", { class: "active", text: "Log out", href: "login" }),
         ),
     );
-}
-
-function setOffset() {
-    setCookie("veiculoOffset", document.getElementById("offset").value, 1);
-}
-
-function getOffset() {
-    document.getElementById("offset").value = getCookie("veiculoOffset");
 }
 
 export default {
