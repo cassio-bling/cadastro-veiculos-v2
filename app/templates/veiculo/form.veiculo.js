@@ -117,7 +117,8 @@ async function saveVeiculo(index) {
             } else {
                 alert("Veículo atualizaddo com sucesso!");
             }
-            //window.location.replace("../veiculos");
+
+            window.location.replace("../veiculos");
         }
     }
 }
@@ -135,9 +136,5 @@ async function updateVeiculoComponentes(idVeiculo) {
         componentes: arr
     }
 
-    let response = await VeiculoComponenteService.update(idVeiculo, data);
-
-    if (response.status != "error") {
-        window.location.replace("../veiculos");
-    }
+    return await VeiculoComponenteService.update(idVeiculo, data);
 }

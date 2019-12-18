@@ -16,21 +16,20 @@ async function init() {
     Layout.createMenu();
     buildFiltroComponentes();
     Layout.initPage();
-    getCount();
-    getVeiculos();
+    refresh();
 }
 
 function bindEvents() {
     $('#filter-button').on('click', function() {
         Filters.set();
         Cookies.set("page", 1);
-        getVeiculos();
+        refresh();
     });
 
     $('#cleanFilters-button').on('click', function() {
         Filters.clear();
         Cookies.set("page", 1);
-        getVeiculos();
+        refresh();
     });
 
     $('#create-button').on('click', function() {
@@ -42,9 +41,27 @@ function bindEvents() {
     });
 }
 
+function refresh() {
+    getCount();
+    getVeiculos();
+}
+
 async function getCount() {
     let params = {
         idUsuario: Cookies.get("idUsuario")
+    }
+
+    if (Cookies.get("filtroMarca")) {
+        params.marca = Cookies.get("filtroMarca");
+    }
+
+    if (Cookies.get("filtroDescricao")) {
+        params.descricao = Cookies.get("filtroDescricao");
+    }
+
+    if (Cookies.get("filtroComponentes[]")) {
+        let selectedValues = Cookies.get("filtroComponentes[]");
+        params.componentes = selectedValues.split(",").map(Number);
     }
 
     let response = await VeiculoService.count(params);
@@ -178,7 +195,6 @@ async function deleteVeiculo(index) {
     if (confirm("Confirmar exclusão do registro?")) {
         await VeiculoComponenteService.remove(index);
         await VeiculoService.remove(index);
-        getCount();
-        getVeiculos();
+        refresh();
     }
 }

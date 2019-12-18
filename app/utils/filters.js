@@ -23,6 +23,9 @@ function set() {
     filters.forEach(filter => {
         if (filter.value) {
             Cookies.set(filter.name, filter.value);
+        } else {
+            filter.value = "";
+            Cookies.set(filter.name, "", -1);
         }
     })
 

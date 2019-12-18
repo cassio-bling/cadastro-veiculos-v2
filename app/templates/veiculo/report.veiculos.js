@@ -31,17 +31,37 @@ async function getVeiculos() {
         idUsuario: Cookies.get("idUsuario"),
     }
 
-    if (Cookies.get("filtroMarca")) {
-        params.marca = Cookies.get("filtroMarca");
-    }
-
     if (Cookies.get("filtroDescricao")) {
         params.descricao = Cookies.get("filtroDescricao");
+
+        $("#filer-description").append(
+            $("<div>").append(
+                $("<span>", { class: "block-quarter" }).append(
+                    $("<label>", { text: "Descrição: " + params.descricao }),
+                )
+            )
+        )
+    }
+
+    if (Cookies.get("filtroMarca")) {
+        params.marca = Cookies.get("filtroMarca");
+
+        $("#filer-description").append(
+            $("<div>").append(
+                $("<span>", { class: "block-quarter" }).append(
+                    $("<label>", { text: "Marca: " + params.marca }),
+                )
+            )
+        )
     }
 
     if (Cookies.get("filtroComponentes[]")) {
         let selectedValues = Cookies.get("filtroComponentes[]");
         params.componentes = selectedValues.split(",").map(Number);
+
+        $("#filer-description").append(
+            $("<label>", { text: "Componentes: " + selectedValues }),
+        )
     }
 
     let response = await VeiculoService.list(params);

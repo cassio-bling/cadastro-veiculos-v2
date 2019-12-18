@@ -20,7 +20,7 @@ class Usuario extends Base
 
     public function insert($model)
     {
-        $query = new Query("INSERT INTO " . self::TABELA . " (nome, email, senha) VALUES (?, ?, ?)", "sss", $model);
+        $query = new Query("INSERT INTO " . self::TABELA . " (nome, email, senha) VALUES (?, ?, ?)", "sss", array($model["nome"], $model["email"], $model["senha"]));
 
         return Database::execute($query);
     }
