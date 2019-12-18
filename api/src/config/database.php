@@ -55,8 +55,6 @@ class Database
             } else {
                 return $statment->get_result()->fetch_assoc();
             }
-        } catch (error $e) {
-            error_log($e->getMessage());
         } finally {
             Database::disconnect();
         }
@@ -76,11 +74,8 @@ class Database
 
             if ($statment->error != null)
                 error_log($statment->error);
-                    
+
             return $statment->insert_id;
-        } catch (Exception $e) {
-            error_log($e->getMessage());
-            return $e;
         } finally {
             Database::disconnect();
         }

@@ -1,27 +1,24 @@
 <?php
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
 
 require_once "src/classes/veiculoComponente.class.php";
-require_once "routes.php";
 
-$app->get('/veiculoComponentes/{id}', function (Request $request) {
+$app->get('/veiculoComponentes/{id}', function (Request $request, Response $response) {
     $veiculoComponente = new VeiculoComponente();
-    $result = $veiculoComponente->get($request->getAttribute('id'));
-    echo json_encode($result, JSON_PRETTY_PRINT);
-    // echo '{"error": {"text": ' . $e->getMessage() . '}';
+    $result = $veiculoComponente->get($request->getAttribute('id'));    
+    return $response->withJson($result, 200)->withHeader('Content-type', 'application/json');
 });
 
-$app->put('/veiculoComponentes/{id}', function (Request $request) {
+$app->put('/veiculoComponentes/{id}', function (Request $request, Response $response) {
     $veiculoComponente = new VeiculoComponente();
     $result = $veiculoComponente->update($request->getAttribute('id'), $request->getParam("componentes"));
-    echo json_encode("Registro atualizado", JSON_PRETTY_PRINT);
-    // echo '{"error": {"text": ' . $e->getMessage() . '}';
+    return $response->withJson(array("message" => "Registro atualizado"), 200)->withHeader('Content-type', 'application/json');
 });
 
-$app->delete('/veiculoComponentes/{id}', function (Request $request) {
+$app->delete('/veiculoComponentes/{id}', function (Request $request, Response $response) {
     $veiculoComponente = new VeiculoComponente();
     $result = $veiculoComponente->delete($request->getAttribute('id'));
-    echo json_encode("Registro excluído", JSON_PRETTY_PRINT);
-    // echo '{"error": {"text": ' . $e->getMessage() . '}';
+    return $response->withJson(array("message" => "Registro excluído"), 200)->withHeader('Content-type', 'application/json');
 });

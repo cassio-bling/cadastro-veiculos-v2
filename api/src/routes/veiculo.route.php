@@ -1,45 +1,45 @@
 <?php
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
 
 require_once "src/classes/veiculo.class.php";
 require_once "src/models/veiculo.model.php";
-require_once "routes.php";
 
-$app->get('/veiculos/count', function (Request $request) {
+$app->get('/veiculos/count', function (Request $request, Response $response) {
     $veiculo = new Veiculo();
-    $result = $veiculo->count($request->getParams());
-    echo json_encode($result, JSON_PRETTY_PRINT);
+    $result = $veiculo->count($request->getParams());    
+    return $response->withJson($result, 200)->withHeader('Content-type', 'application/json');
 });
 
-$app->get('/veiculos', function (Request $request) {
+$app->get('/veiculos', function (Request $request, Response $response) {
     $veiculo = new Veiculo();
     $result = $veiculo->getAll($request->getParams());
-    echo json_encode($result, JSON_PRETTY_PRINT);
+    return $response->withJson($result, 200)->withHeader('Content-type', 'application/json');
 });
 
-$app->get('/veiculos/{id}', function (Request $request) {
+$app->get('/veiculos/{id}', function (Request $request, Response $response) {
     $veiculo = new Veiculo();
     $result = $veiculo->get($request->getAttribute('id'));
-    echo json_encode($result, JSON_PRETTY_PRINT);
+    return $response->withJson($result, 200)->withHeader('Content-type', 'application/json');
 });
 
-$app->post('/veiculos', function (Request $request) {
+$app->post('/veiculos', function (Request $request, Response $response) {
     $veiculo = new Veiculo();
     $result = $veiculo->insert(map($request->getParams()));
-    echo json_encode(array("id" => $result), JSON_PRETTY_PRINT);
+    return $response->withJson(array("id" => $result))->withHeader('Content-type', 'application/json');
 });
 
-$app->put('/veiculos/{id}', function (Request $request) {
+$app->put('/veiculos/{id}', function (Request $request, Response $response) {
     $veiculo = new Veiculo();
     $result = $veiculo->update($request->getAttribute('id'), map($request->getParams()));
-    echo json_encode("Veiculo atualizado", JSON_PRETTY_PRINT);
+    return $response->withJson(array("message" => "Veiculo atualizado"))->withHeader('Content-type', 'application/json');
 });
 
-$app->delete('/veiculos/{id}', function (Request $request) {
+$app->delete('/veiculos/{id}', function (Request $request, Response $response) {
     $veiculo = new Veiculo();
     $result = $veiculo->delete($request->getAttribute('id'));
-    echo json_encode("registro excluído", JSON_PRETTY_PRINT);
+    return $response->withJson(array("message" => "Registro excluído"))->withHeader('Content-type', 'application/json');    
 });
 
 function map($params)

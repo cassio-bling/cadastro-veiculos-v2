@@ -26,9 +26,9 @@ async function saveUsuario() {
     };
 
     let response = await UsuarioService.create(data);
-    console.log(response);
-    if (response != "error") {
+
+    if (response.status != "error") {
         alert("Usuário cadastrado com sucesso!");
-        //window.location.href = "../login";
+        window.location.href = "../login";
     }
 }

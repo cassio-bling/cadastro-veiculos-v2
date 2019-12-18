@@ -56,7 +56,7 @@ async function loadVeiculo(index) {
 async function loadComponentes() {
     let response = await ComponenteService.get();
 
-    if (response != "error") {
+    if (response.status != "error") {
         response.forEach(componente => {
             $("#componentes").append(
                 $("<span>", { class: "block-quarter" }).append(
@@ -71,7 +71,7 @@ async function loadComponentes() {
 async function loadVeiculoComponentes(index) {
     let response = await VeiculoComponenteService.get(index);
 
-    if (response != "error") {
+    if (response.status != "error") {
         response.forEach(componente => {
             $("#componentes").append(
                 $("<span>", { class: "block-quarter" }).append(
@@ -101,23 +101,23 @@ async function saveVeiculo(index) {
     if (index == "create") {
         var create = true;
         var response = await VeiculoService.create(data);
-        if (response != "error") {
+        if (response.status != "error") {
             index = response["id"];
         }
     } else {
         var response = await VeiculoService.update(index, data);
     }
 
-    if (response != "error") {
+    if (response.status != "error") {
         response = await updateVeiculoComponentes(index);
 
-        if (response != "error") {
+        if (response.status != "error") {
             if (create) {
                 alert("Veículo cadastrado com sucesso!");
             } else {
                 alert("Veículo atualizaddo com sucesso!");
             }
-            window.location.replace("../veiculos");
+            //window.location.replace("../veiculos");
         }
     }
 }
@@ -137,7 +137,7 @@ async function updateVeiculoComponentes(idVeiculo) {
 
     let response = await VeiculoComponenteService.update(idVeiculo, data);
 
-    if (response != "error") {
+    if (response.status != "error") {
         window.location.replace("../veiculos");
     }
 }
