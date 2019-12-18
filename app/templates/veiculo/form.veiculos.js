@@ -13,42 +13,33 @@ window.onload = function() {
 }
 
 async function init() {
-    await getCount();
-    await getVeiculos();
-    buildFiltroComponentes();
     Layout.createMenu();
+    buildFiltroComponentes();
+    Layout.initPage();
+    getCount();
+    getVeiculos();
 }
 
 function bindEvents() {
-    $('#button-filter').on('click', function() {
+    $('#filter-button').on('click', function() {
         Filters.set();
         Cookies.set("page", 1);
         getVeiculos();
     });
 
-    $('#button-cleanFilters').on('click', function() {
+    $('#cleanFilters-button').on('click', function() {
         Filters.clear();
         Cookies.set("page", 1);
         getVeiculos();
     });
 
-    $('#button-create').on('click', function() {
+    $('#create-button').on('click', function() {
         createVeiculo()
     });
 
-    $('#button-report').on('click', function() {
+    $('#report-button').on('click', function() {
         reportVeiculo()
     });
-}
-
-function initPage() {
-    if (!Cookies.get("page")) {
-        Cookies.set("page", 1);
-    } else if (Number(Cookies.get("page") > Math.ceil(Cookies.get["totalVeiculos"] / LIMIT))) {
-        Cookies.set("page", 1);
-    }
-
-    manageSelectedPage();
 }
 
 async function getCount() {
@@ -62,7 +53,6 @@ async function getCount() {
         document.getElementById('total').innerHTML = response["total"];
         Cookies.set("totalVeiculos", response["total"]);
         Layout.createPagination(Math.ceil(response["total"] / LIMIT), setPage);
-        initPage();
     }
 }
 
@@ -98,18 +88,8 @@ function setPage(index) {
             }
     }
 
-    manageSelectedPage();
+    Layout.manageSelectedPage();
     getVeiculos();
-}
-
-function manageSelectedPage() {
-    let elements = document.getElementsByClassName("pagination");
-    for (let i = 0; i < elements.length; i++) {
-        elements[i].classList.remove("selected-page");
-        if (elements[i].value == Cookies.get("page")) {
-            elements[i].classList.add("selected-page");
-        }
-    }
 }
 
 async function getVeiculos() {

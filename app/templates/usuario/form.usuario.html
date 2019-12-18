@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <title>Inclusão de usuários</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="../app/templates/layouts/jquery/jquery.js"></script>
+    <script src="../app/templates/layouts/jquery/jquery.mask.js"></script>
+    <script src="../app/templates/layouts/jquery/default.js"></script>
+
+    <script type="module" src="../app/templates/usuario/form.usuario.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../app/templates/layouts/styles/style.css">
+</head>
+
+<body>
+    <form name="usuario" method="post" action="" id="form">
+        <div class="cadastro">
+            <h3 class="page-header">Dados do usuário</h3>
+            <hr>
+            <div hidden>
+                <input hidden type="text" id="id" name="id">
+            </div>
+            <div>
+                <span class="block-half">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" required maxlength="50" autocomplete="off" placeholder="Nome" name="nome">
+                </span>
+            </div>
+            <div class="row">
+                <span class="block-half">
+                    <label for="email">Email</label>
+                    <input type="email" class="email" id="email" required maxlength="100" autocomplete="off" placeholder="Email" name="email">
+                </span>
+            </div>
+            <div>
+                <span class="block-quarter">
+                    <label for="senha">Senha</label>
+                    <input type="password" class="senha" required maxlength="20" id="senha" autocomplete="off" placeholder="Senha" name="senha">
+                </span>
+            </div>
+            </p>
+            <div>
+                <span class="block-half">
+                    <input type="button" class="save" value="Salvar" id="save-button">
+                    <input type="button" class="cancel" value="Cancelar" id="cancel-button">
+                </span>
+            </div>
+        </div>
+    </form>
+</body>
+
+</html>

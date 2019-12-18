@@ -14,7 +14,7 @@ function bindEvents() {
     });
 
     $('#create-button').on('click', function() {
-
+        window.location.href = "usuarios/create";
     });
 }
 

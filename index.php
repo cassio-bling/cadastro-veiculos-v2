@@ -8,7 +8,9 @@ switch ($_SERVER["REQUEST_URI"]) {
     case WEBROOT . "login":
         require "app/templates/usuario/form.login.html";
         break;
-    case WEBROOT . "veiculos/index":
+    case WEBROOT . "usuarios/create":
+        require "app/templates/usuario/form.usuario.html";
+        break;
     case WEBROOT . "veiculos":
         require "app/templates/veiculo/form.veiculos.html";
         break;

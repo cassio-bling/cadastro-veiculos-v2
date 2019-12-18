@@ -17,11 +17,11 @@ function setLabels() {
 }
 
 function bindEvents() {
-    $('#button-print').on('click', function() {
+    $('#print-button').on('click', function() {
         window.print();
     });
 
-    $('#button-close').on('click', function() {
+    $('#close-button').on('click', function() {
         window.location.replace("../veiculos");
     });
 }

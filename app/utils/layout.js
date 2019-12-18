@@ -26,6 +26,30 @@ function createPagination(numberOfPages, paginationFunction) {
     $('.pagination').on("click", function() {
         paginationFunction(this.value);
     });
+
+    initPage();
+
+    if (Number(Cookies.get("page") > numberOfPages)) {
+        Cookies.set("page", 1);
+    }
+
+    manageSelectedPage();
+}
+
+function initPage() {
+    if (!Cookies.get("page")) {
+        Cookies.set("page", 1);
+    }
+}
+
+function manageSelectedPage() {
+    let elements = document.getElementsByClassName("pagination");
+    for (let i = 0; i < elements.length; i++) {
+        elements[i].classList.remove("selected-page");
+        if (elements[i].value == Cookies.get("page")) {
+            elements[i].classList.add("selected-page");
+        }
+    }
 }
 
 function createMenu() {
@@ -40,5 +64,7 @@ function createMenu() {
 
 export default {
     createPagination,
-    createMenu
+    initPage,
+    manageSelectedPage,
+    createMenu,
 };

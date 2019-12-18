@@ -16,14 +16,14 @@ function init() {
 }
 
 function bindEvents() {
-    $('#button-save').on('click', function() {
+    $('#save-button').on('click', function() {
         if (Validation.validateForm()) {
             let index = document.URL.split('/veiculos/')[1];
             saveVeiculo(index);
         }
     });
 
-    $('#button-cancel').on('click', function() {
+    $('#cancel-button').on('click', function() {
         window.location.replace("../veiculos");
     });
 }
@@ -99,6 +99,7 @@ async function saveVeiculo(index) {
     };
 
     if (index == "create") {
+        var create = true;
         var response = await VeiculoService.create(data);
         if (response != "error") {
             index = response["id"];
@@ -111,6 +112,11 @@ async function saveVeiculo(index) {
         response = await updateVeiculoComponentes(index);
 
         if (response != "error") {
+            if (create) {
+                alert("Veículo cadastrado com sucesso!");
+            } else {
+                alert("Veículo atualizaddo com sucesso!");
+            }
             window.location.replace("../veiculos");
         }
     }

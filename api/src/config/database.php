@@ -62,7 +62,7 @@ class Database
         }
     }
 
-    public static function execute(Query $query, $isInsert = false)
+    public static function execute(Query $query)
     {
         try {
             $connection = Database::connect();
@@ -78,8 +78,9 @@ class Database
                 error_log($statment->error);
                     
             return $statment->insert_id;
-        } catch (error $e) {
+        } catch (Exception $e) {
             error_log($e->getMessage());
+            return $e;
         } finally {
             Database::disconnect();
         }
