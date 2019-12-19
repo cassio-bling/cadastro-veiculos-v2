@@ -47,7 +47,7 @@ class Token
             $valid = hash_hmac("sha256", "$header.$payload", self::KEY, true);
             $valid = base64_encode($valid);
 
-            return $sign == $valid && self::checkExp($payload);
+            return $sign == $valid && (new self)->checkExp($payload);
         } catch (Exception $e) {
             return false;
         }
