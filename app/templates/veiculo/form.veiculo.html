@@ -40,12 +40,16 @@
             <div class="row">
                 <span class="block-small">
                     <label for="anoModelo">Ano modelo</label>
-                    <input type="number" class="yearpicker" maxlength="4" min="1920" max="2099" autocomplete="off" placeholder="Ano do modelo" id="anoModelo" name="anoModelo" required>
+                    <select id="anoModelo" name="anoModelo" required class="select-css ano">
+                        <option disabled selected value> -- Ano Modelo -- </option>
+                    </select>
                 </span>
 
                 <span class="block-small">
-                    <label for="anoFabricacao">Ano fabricação</label>
-                    <input type="number" class="yearpicker" maxlength="4" min="1920" max="2099" autocomplete="off" placeholder="Fabricação" id="anoFabricacao" name="anoFabricacao" required>
+                    <label for="anoFabricacao">Ano modelo</label>
+                    <select id="anoFabricacao" name="anoFabricacao" required class="select-css ano">
+                        <option disabled selected value> -- Ano Fabricação -- </option>
+                    </select>
                 </span>
 
                 <span class="block-quarter">

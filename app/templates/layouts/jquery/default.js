@@ -34,6 +34,20 @@ $(document).ready(function() {
             });
         }
     });
+
+    let elements = $('.ano');
+    for (let index = 0; index < elements.length; index++) {
+        let element = elements[index];
+        let year = new Date().getFullYear();
+        let date = year - 100;
+        let future = year + 1;
+        while (future > date) {
+            $(element).append(
+                $("<option>", { value: future, text: future })
+            )
+            future--
+        }
+    }
 });
 
 function applyMasks() {
@@ -60,18 +74,4 @@ function applyMasks() {
     $('.km').mask("000000", {
         reverse: true
     });
-
-    $('.ano').mask("0000", {
-        "translation": {
-            0: {
-                pattern: /(0-9])/,
-            },
-        },
-    });
-
-    // $('.yearpicker').yearpicker({
-    //     year: null,
-    //     startYear: 1920,
-    //     endYear: 2099,
-    // });
 }
