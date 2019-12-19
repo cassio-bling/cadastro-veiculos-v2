@@ -2,9 +2,10 @@
 import Cookies from '../utils/cookies.js';
 
 const _apiHost = 'http://localhost/cadastro-veiculos-v2/api';
+var sessionTerminated = false;
 
 async function request(url, params, method = 'GET') {
-
+    sessionTerminated = false;
     const options = {
         method,
         headers: {
@@ -27,8 +28,18 @@ async function request(url, params, method = 'GET') {
     const response = await fetch(_apiHost + url, options);
 
     if (response.status !== 200) {
-        alert('O servidor retornou um status inexperado.');
-        return generateErrorResponse('O servidor retornou um status inexperado.');
+        let $message = await response.text();
+        if ($message == 'The token is invalid token or expirated') {
+            if (!sessionTerminated) {
+                sessionTerminated = true;
+                alert('A sessão expirou.');
+                window.location.href = '../../../cadastro-veiculos-v2';
+                return generateErrorResponse('The token is invalid token or expirated');
+            }
+        } else {
+            alert('O servidor retornou um status inexperado.');
+            return generateErrorResponse('O servidor retornou um status inexperado.');
+        }
     }
 
     const result = await response.json();

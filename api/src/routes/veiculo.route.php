@@ -13,15 +13,6 @@ $app->get('/veiculos/count', function (Request $request, Response $response) {
 });
 
 $app->get('/veiculos', function (Request $request, Response $response) {
-    error_log($request->getUri());
-
-    $test =  $request->getUri()->explode("/");
-    for ($i=0; $i < count($test); $i++) { 
-        error_log($test[$i]);
-    }
-    
-    return $request->getRequestTarget();
-    
     $veiculo = new Veiculo();
     $result = $veiculo->getAll($request->getParams());
     return $response->withJson($result, 200)->withHeader('Content-type', 'application/json');

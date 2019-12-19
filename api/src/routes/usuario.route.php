@@ -15,7 +15,7 @@ $app->get('/usuarios', function (Request $request, Response $response) {
     $result = $usuario->login($email, $senha);
 
     if ($result != null) {
-        $token = generateToken($result["id"]);
+        $token = Token::generate($result["id"]);
         $result["token"] = $token;
         unset($result["senha"]);
     } else {

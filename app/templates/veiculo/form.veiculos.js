@@ -151,7 +151,7 @@ function buildTabelaVeiculos(veiculos) {
                     $("<input> ", { type: "button", class: "edit", value: "Editar", id: veiculo["id"] }),
                     $("<input>", { type: "button", class: "delete", value: "Excluir", id: veiculo["id"] }),
                 )
-            ).after("  d   ")
+            )
         )
     });
 
@@ -167,16 +167,18 @@ function buildTabelaVeiculos(veiculos) {
 async function buildFiltroComponentes() {
     let componentes = await ComponenteService.get();
 
-    componentes.forEach(componente => {
-        $("#componentes").append(
-            $("<span>", { class: "block-quarter" }).append(
-                $("<input>", { type: "checkbox", class: "filtro-checkbox", name: "filtroComponentes[]", id: "filtroComponente:" + componente["id"], value: componente["id"] }),
-                $("<label>", { class: "label-checkbox", for: "filtroComponente:" + componente["id"], text: componente["descricao"] }),
+    if (componentes.status != "error") {
+        componentes.forEach(componente => {
+            $("#componentes").append(
+                $("<span>", { class: "block-quarter" }).append(
+                    $("<input>", { type: "checkbox", class: "filtro-checkbox", name: "filtroComponentes[]", id: "filtroComponente:" + componente["id"], value: componente["id"] }),
+                    $("<label>", { class: "label-checkbox", for: "filtroComponente:" + componente["id"], text: componente["descricao"] }),
+                )
             )
-        )
-    });
+        });
 
-    Filters.get();
+        Filters.get();
+    }
 }
 
 function createVeiculo() {
@@ -193,8 +195,12 @@ function editVeiculo(index) {
 
 async function deleteVeiculo(index) {
     if (confirm("Confirmar exclusão do registro?")) {
-        await VeiculoComponenteService.remove(index);
-        await VeiculoService.remove(index);
-        refresh();
+        let response = await VeiculoComponenteService.remove(index);
+        if (response.status != "error") {
+            response = await VeiculoService.remove(index);
+            if (response.status != "error") {
+                refresh();
+            }
+        }
     }
 }

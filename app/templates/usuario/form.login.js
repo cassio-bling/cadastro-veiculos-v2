@@ -4,6 +4,7 @@ import Validation from '../../utils/validation.js';
 
 window.onload = function() {
     bindEvents();
+    Cookies.clear();
 }
 
 function bindEvents() {
@@ -28,7 +29,6 @@ async function checkLogin() {
 
     if (usuario.status != "error") {
         if (usuario["id"]) {
-            Cookies.clear();
             Cookies.set("idUsuario", usuario["id"]);
             Cookies.set("nomeUsuario", usuario["nome"]);
             Cookies.set("token", usuario["token"]);
