@@ -14,7 +14,7 @@ class Token
 
         //Payload - Content
         $payload = [
-            "exp" => (new DateTime("now"))->add(new DateInterval('PT1M'))->getTimestamp(),
+            "exp" => (new DateTime("now"))->add(new DateInterval('PT10M'))->getTimestamp(),
             "uid" => $idUsuario
         ];
 

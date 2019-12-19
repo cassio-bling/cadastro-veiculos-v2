@@ -36,7 +36,18 @@ function bindEvents() {
         createVeiculo()
     });
 
-    $('#report-button').on('click', function() {
+    $('#byVeiculo').on('click', function() {
+        Cookies.set("reportType", "veiculo")
+        reportVeiculo()
+    });
+
+    $('#byMarca').on('click', function() {
+        Cookies.set("reportType", "marca")
+        reportVeiculo()
+    });
+
+    $('#byAno').on('click', function() {
+        Cookies.set("reportType", "ano")
         reportVeiculo()
     });
 }

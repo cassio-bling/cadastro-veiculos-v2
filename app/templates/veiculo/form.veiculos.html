@@ -65,16 +65,22 @@
 
         <table id="lista_veiculos" class="table table-striped">
             <thead>
-                <tr>
-                    <th>Descrição</th>
-                    <th>Placa</th>
-                    <th>Marca</th>
-                    <th class="action">
-                        <input type="button" class="insert" value="Incluir" id="create-button"><input type="button" class="report" value="Relatório" id="report-button">
-                    </th>
-                </tr>
-                <tbody></tbody>
+                <th>Descrição</th>
+                <th>Placa</th>
+                <th>Marca</th>
+                <th class="action">
+                    <input type="button" class="insert" value="Incluir" id="create-button">
+                    <div margin class="dropdown">
+                        <input type="button" class="report dropbtn" value="Relatório" id="report-button">
+                        <div class="dropdown-content">
+                            <a id="byVeiculo" href="#">Veículos</a>
+                            <a id="byMarca" href="#">Por marca</a>
+                            <a id="byAno" href="#">Por ano</a>
+                        </div>
+                    </div>
+                </th>
             </thead>
+            <tbody></tbody>
         </table>
 
         <p id="pagination"></p>

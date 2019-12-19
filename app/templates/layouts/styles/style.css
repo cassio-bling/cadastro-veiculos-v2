@@ -140,6 +140,10 @@ input[type=button].clear {
     height: 40px;
 }
 
+input[type=button].report {
+    margin: 0px -2px 0px -2px;
+}
+
 input[type=button].insert {
     background: green;
 }
@@ -365,6 +369,42 @@ tr:nth-child(even) {
 
 .topnav a:hover {
     background-color: olive;
+}
+
+.dropbtn {
+    border: none;
+}
+
+.dropdown {
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    font-size: normal;
+    font-weight: bold;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: dodgerblue;
 }
 
 @media only screen and (max-width: 600px) {
