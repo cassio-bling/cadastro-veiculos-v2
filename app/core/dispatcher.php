@@ -1,5 +1,7 @@
 <?php
 
+require_once ROOT . "app/core/request.php";
+
 class Dispatcher
 {
     private $request;
@@ -8,39 +10,27 @@ class Dispatcher
     {
         $this->request = new Request();
 
-        $this->parse($this->request->url, $this->request);
-
-        $controller = $this->loadController();
-
-        call_user_func_array([$controller, $this->request->action], $this->request->params);
-    }
-
-    public function loadController()
-    {
-        $name = $this->request->controller . ".controller";
-        $file = ROOT . 'controllers/' . $name . '.php';
-        require($file);
-        $class = $this->request->controller . "Controller";
-        $controller = new $class();
-        return $controller;
-    }
-
-    static public function parse($url, $request)
-    {
-        $url = trim($url);
-
-        if ($url == WEBROOT) {
-            require "app/templates/usuario/form.login.html";
-            return header("Location: " . WEBROOT . "veiculo/index");
-            
-        } else {
-            $explode_url = explode('/', $url);
-            $explode_url = array_slice($explode_url, 2);
-
-            $request->controller = $explode_url[0];
-            $request->action = $explode_url[1];
-            $request->params = array_slice($explode_url, 2);
-        }
+        switch ($this->request->url) {
+            case "":
+            case "login":
+                require "app/templates/usuario/form.login.html";
+                break;
+            case "usuarios/create":
+                require "app/templates/usuario/form.usuario.html";
+                break;
+            case "veiculos":
+                require "app/templates/veiculo/form.veiculos.html";
+                break;
+            case "veiculos/create":
+            case (preg_match('#' . WEBROOT . 'veiculos/[0-9]*$#', $_SERVER["REQUEST_URI"]) ? true : false):
+                require "app/templates/veiculo/form.veiculo.html";
+                break;
+            case "veiculos/report":
+                require "app/templates/veiculo/report.veiculos.html";
+                break;
+            default:
+                break;
+        }                
     }
 
 }

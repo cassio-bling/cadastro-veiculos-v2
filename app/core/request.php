@@ -6,6 +6,6 @@ class Request
 
     public function __construct()
     {
-        $this->url = $_SERVER["REQUEST_URI"];
+        $this->url = str_replace(WEBROOT, "", $_SERVER["REQUEST_URI"]);
     }
 }
