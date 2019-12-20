@@ -5,6 +5,14 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Chrome",
+            "port": 9222,
+            "url": "http://localhost/cadastro-veiculos-v2",
+            "webRoot": "${workspaceFolder}",
+        },
+        {
             "name": "Listen for XDebug",
             "type": "php",
             "request": "launch",
