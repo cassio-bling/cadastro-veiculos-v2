@@ -115,7 +115,7 @@ async function saveVeiculo(index) {
             if (create) {
                 alert("Veículo cadastrado com sucesso!");
             } else {
-                alert("Veículo atualizaddo com sucesso!");
+                alert("Veículo atualizado com sucesso!");
             }
 
             window.location.replace("../veiculos");

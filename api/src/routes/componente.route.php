@@ -1,12 +1,9 @@
 <?php
 
-use \Psr\Http\Message\ServerRequestInterface as Request;
-use \Psr\Http\Message\ResponseInterface as Response;
+use \Slim\App as App;
 
-require_once "src/classes/componente.class.php";
+require_once "src/controllers/componente.controller.php";
 
-$app->get('/componentes', function (Request $request, Response $response) {
-    $veiculo = new Componente();
-    $result = $veiculo->getAll();
-    return $response->withJson($result, 200)->withHeader('Content-type', 'application/json');
+$app->group('/componentes', function (App $app) {
+    $app->get('', \ComponenteController::class . ':getAll');    
 });
