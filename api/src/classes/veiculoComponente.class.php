@@ -1,9 +1,7 @@
 <?php
 
-class VeiculoComponente extends Base
-{
-    public function get(int $idVeiculo)
-    {
+class VeiculoComponente extends Base {
+    public function get(int $idVeiculo) {
         $query = new Query();
         $query->setSql("SELECT A.id, A.descricao, CASE WHEN B.idComponente IS NOT NULL THEN 1 ELSE 0 END AS checked
             FROM componente AS A
@@ -14,8 +12,7 @@ class VeiculoComponente extends Base
         return Database::select($query, true);
     }
 
-    public function update(int $idVeiculo, $componentes)
-    {
+    public function update(int $idVeiculo, $componentes) {
         $this->delete($idVeiculo);
 
         if (count($componentes) <= 0) {
@@ -28,18 +25,17 @@ class VeiculoComponente extends Base
         $query = new Query();
         $query->setSql("INSERT INTO veiculo_componente (idVeiculo, idComponente) SELECT ?, id FROM componente WHERE id IN ($in)");
         $query->setTypes("i" . $types);
-        
+
         $query->addParam($idVeiculo);
-        
+
         foreach ($componentes as $value) {
             $query->addParam($value);
         }
-        
+
         return Database::execute($query);
     }
 
-    public function delete(int $idVeiculo)
-    {
+    public function delete(int $idVeiculo) {
         $query = new Query();
         $query->setSql("DELETE FROM veiculo_componente WHERE idVeiculo = ?");
         $query->setTypes("i");

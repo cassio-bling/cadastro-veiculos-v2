@@ -1,7 +1,6 @@
 <?php
 
-class VeiculoModel
-{
+class VeiculoModel {
     private $id;
     private $descricao;
     private $placa;
@@ -19,128 +18,98 @@ class VeiculoModel
     private $dataAlteracao;
 
     //Setters
-    public function setId($id)
-    {
+    public function setId($id) {
         $this->id = $id;
     }
-    public function setDescricao($descricao)
-    {
+    public function setDescricao($descricao) {
         $this->descricao = $descricao;
     }
-    public function setPlaca($placa)
-    {
+    public function setPlaca($placa) {
         $this->placa = preg_replace("/[^A-Z0-9]+/", "", $placa);
     }
-    public function setCodigoRenavam($codigoRenavam)
-    {
+    public function setCodigoRenavam($codigoRenavam) {
         $this->codigoRenavam = $codigoRenavam;
     }
-    public function setAnoModelo($anoModelo)
-    {
+    public function setAnoModelo($anoModelo) {
         $this->anoModelo = $anoModelo;
     }
-    public function setAnoFabricacao($anoFabricacao)
-    {
+    public function setAnoFabricacao($anoFabricacao) {
         $this->anoFabricacao = $anoFabricacao;
     }
-    public function setCor($cor)
-    {
+    public function setCor($cor) {
         $this->cor = $cor;
     }
-    public function setKm($km)
-    {
+    public function setKm($km) {
         $this->km = $km;
     }
-    public function setMarca($marca)
-    {
+    public function setMarca($marca) {
         $this->marca = $marca;
     }
-    public function setPreco($preco)
-    {
+    public function setPreco($preco) {
         $preco = preg_replace("/[.]+/", "", $preco);
         $preco = preg_replace("/[,]+/", ".", $preco);
         $this->preco = $preco;
     }
-    public function setPrecoFipe($precoFipe)
-    {
+    public function setPrecoFipe($precoFipe) {
         $this->precoFipe = $precoFipe;
     }
-    public function setIdUsuario($idUsuario)
-    {
+    public function setIdUsuario($idUsuario) {
         $this->idUsuario = $idUsuario;
     }
-    public function setComponentes($componentes)
-    {
+    public function setComponentes($componentes) {
         $this->componentes = $componentes;
     }
-    public function setDataCriacao($dataCricao)
-    {
+    public function setDataCriacao($dataCricao) {
         $this->dataCricao = $dataCricao;
     }
-    public function setDataAlteracao($dataAlteracao)
-    {
+    public function setDataAlteracao($dataAlteracao) {
         $this->dataAlteracao = $dataAlteracao;
     }
 
     //Getters
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
-    public function getDescricao()
-    {
+    public function getDescricao() {
         return $this->descricao;
     }
-    public function getPlaca()
-    {
+    public function getPlaca() {
         return $this->placa;
     }
-    public function getCodigoRenavam()
-    {
+    public function getCodigoRenavam() {
         return $this->codigoRenavam;
     }
-    public function getAnoModelo()
-    {
+    public function getAnoModelo() {
         return $this->anoModelo;
     }
-    public function getAnoFabricacao()
-    {
+    public function getAnoFabricacao() {
         return $this->anoFabricacao;
     }
-    public function getCor()
-    {
+    public function getCor() {
         return $this->cor;
     }
-    public function getKm()
-    {
+    public function getKm() {
         return $this->km;
     }
-    public function getMarca()
-    {
+    public function getMarca() {
         return $this->marca;
     }
-    public function getPreco()
-    {
+    public function getPreco() {
         return $this->preco;
     }
-    public function getPrecoFipe()
-    {
+    public function getPrecoFipe() {
         return $this->precoFipe;
     }
-    public function getIdUsuario()
-    {
+    public function getIdUsuario() {
         return $this->idUsuario;
     }
-    public function getComponentes()
-    {
+    public function getComponentes() {
         return $this->componentes;
     }
-    public function getDataCriacao()
-    {
+    public function getDataCriacao() {
         return $this->dataCricao;
     }
-    public function getDataAlteracao()
-    {
+    public function getDataAlteracao() {
         return $this->dataAlteracao;
     }
 }

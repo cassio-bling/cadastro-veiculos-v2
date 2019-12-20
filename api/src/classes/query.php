@@ -1,60 +1,49 @@
 <?php
 
-class Query
-{
+class Query {
     private $sql;
     private $types;
     private $params;
 
-    function __construct($sql = "", $types = "", $params = array())
-    {
+    public function __construct($sql = "", $types = "", $params = array()) {
         $this->sql = $sql;
         $this->types = $types;
         $this->params = $params;
     }
 
-    public function setSql($sql)
-    {
+    public function setSql($sql) {
         $this->sql = $sql;
     }
 
-    public function addSql($sql)
-    {
+    public function addSql($sql) {
         $this->sql .= $sql;
     }
 
-    public function getSql()
-    {
+    public function getSql() {
         return $this->sql;
     }
 
-    public function setTypes($types)
-    {
+    public function setTypes($types) {
         $this->types = $types;
     }
 
-    public function addType($types)
-    {
+    public function addType($types) {
         $this->types .= $types;
     }
 
-    public function getTypes()
-    {
+    public function getTypes() {
         return $this->types;
     }
 
-    public function setParams($params)
-    {
+    public function setParams($params) {
         $this->params = $params;
     }
 
-    public function addParam($param)
-    {
+    public function addParam($param) {
         array_push($this->params, $param);
     }
 
-    public function getParams()
-    {
+    public function getParams() {
         return $this->params;
     }
 }

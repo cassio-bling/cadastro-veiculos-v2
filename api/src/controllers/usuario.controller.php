@@ -1,22 +1,19 @@
 <?php
 
-use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
+use \Psr\Http\Message\ServerRequestInterface as Request;
 
 require_once "src/classes/usuario.class.php";
 require_once "src/config/token.php";
 
-class UsuarioController
-{
+class UsuarioController {
     private $usuario;
 
-    function __construct()
-    {
+    public function __construct() {
         $this->usuario = new Usuario();
     }
 
-    function get(Request $request, Response $response)
-    {
+    public function get(Request $request, Response $response) {
         $email = $request->getParam("email");
         $senha = $request->getParam("senha");
 
@@ -33,8 +30,7 @@ class UsuarioController
         return $response->withJson($result, 200)->withHeader('Content-type', 'application/json');
     }
 
-    function post(Request $request, Response $response)
-    {
+    public function post(Request $request, Response $response) {
         $result = $this->usuario->insert($request->getParams());
         return $response->withJson($result, 200)->withHeader('Content-type', 'application/json');
     }

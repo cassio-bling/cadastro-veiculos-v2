@@ -1,21 +1,19 @@
 <?php
 
-class Token
-{
+class Token {
     private const KEY = "bling";
 
-    static function generate($idUsuario)
-    {
+    public static function generate($idUsuario) {
         //Header Token
         $header = [
             "typ" => "JWT",
-            "alg" => "HS256"
+            "alg" => "HS256",
         ];
 
         //Payload - Content
         $payload = [
             "exp" => (new DateTime("now"))->add(new DateInterval('PT10M'))->getTimestamp(),
-            "uid" => $idUsuario
+            "uid" => $idUsuario,
         ];
 
         //JSON
@@ -36,8 +34,7 @@ class Token
         return $token;
     }
 
-    static function validate($token)
-    {
+    public static function validate($token) {
         try {
             $part = explode(".", $token);
             $header = trim(str_replace("Bearer", "", $part[0]));
@@ -53,8 +50,7 @@ class Token
         }
     }
 
-    private function checkExp($payload)
-    {
+    private function checkExp($payload) {
         $payload = base64_decode($payload);
         $payload = json_decode($payload);
         return $payload->exp > (new DateTime("now"))->getTimestamp();

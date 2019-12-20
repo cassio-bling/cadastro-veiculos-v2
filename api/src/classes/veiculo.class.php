@@ -3,12 +3,10 @@
 require_once "base.class.php";
 require_once "src/models/veiculo.model.php";
 
-class Veiculo extends Base
-{
+class Veiculo extends Base {
     const TABELA = "veiculo";
 
-    public function count($model = null)
-    {
+    public function count($model = null) {
         $query = new Query("SELECT COUNT(id) as total FROM " . static::TABELA);
 
         $this->checkFilters($query, $model);
@@ -16,8 +14,7 @@ class Veiculo extends Base
         return Database::select($query);
     }
 
-    public function getAll($model = null)
-    {
+    public function getAll($model = null) {
         $query = new Query($model);
 
         if ($model != null && array_key_exists("list", $model) && $model["list"] == true) {
@@ -34,8 +31,7 @@ class Veiculo extends Base
         return Database::select($query, true);
     }
 
-    public function insert($model)
-    {
+    public function insert($model) {
         $query = new Query("INSERT INTO " . self::TABELA . " (descricao, placa, codigoRenavam, anoModelo, anoFabricacao, cor, km, marca, preco, precoFipe, idUsuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $query->setTypes("sssiisisddi");
         $query->setParams($this->parse($model));
@@ -43,8 +39,7 @@ class Veiculo extends Base
         return Database::execute($query);
     }
 
-    public function update(int $id, $model)
-    {
+    public function update(int $id, $model) {
         $query = new Query("UPDATE " . self::TABELA . " SET descricao = ?, placa = ?, codigoRenavam = ?, anoModelo = ?, anoFabricacao = ?, cor = ?, km = ?, marca = ?, preco = ?, precoFipe = ?, idUsuario = ? WHERE id = ?");
         $query->setTypes("sssiisisddii");
 
@@ -54,8 +49,7 @@ class Veiculo extends Base
         return Database::execute($query);
     }
 
-    private function checkFilters(Query $query, $model)
-    {
+    private function checkFilters(Query $query, $model) {
         if ($model == null) {
             return;
         }
@@ -66,8 +60,7 @@ class Veiculo extends Base
         $this->setModelFilters($query, $model);
     }
 
-    private function setModelFilters(Query $query, $model)
-    {
+    private function setModelFilters(Query $query, $model) {
         if (array_key_exists("descricao", $model)) {
             $query->addSql(" AND descricao LIKE ?");
             $query->addType("s");
@@ -95,8 +88,7 @@ class Veiculo extends Base
         }
     }
 
-    private function parse($model)
-    {
+    private function parse($model) {
         $data = array(
             $model->getDescricao(),
             $model->getPlaca(),
@@ -108,7 +100,7 @@ class Veiculo extends Base
             $model->getMarca(),
             $model->getPreco(),
             $model->getPrecoFipe(),
-            $model->getIdUsuario()
+            $model->getIdUsuario(),
         );
 
         return $data;
